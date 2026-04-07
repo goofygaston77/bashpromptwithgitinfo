@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" font-family="'Courier New', Courier, monospace" font-size="13">
+
+  <!-- Terminal background -->
+  <rect width="720" height="520" rx="10" fill="#1e1e1e"/>
+
+  <!-- Title bar -->
+  <rect width="720" height="36" rx="10" fill="#3a3a3a"/>
+  <rect y="18" width="720" height="18" fill="#3a3a3a"/>
+  <circle cx="18" cy="18" r="6" fill="#ff5f57"/>
+  <circle cx="38" cy="18" r="6" fill="#febc2e"/>
+  <circle cx="58" cy="18" r="6" fill="#28c840"/>
+  <text x="360" y="23" text-anchor="middle" fill="#888" font-family="sans-serif" font-size="12">bash</text>
+
+  <!-- Row helper: y positions -->
+  <!-- Section 1: clean -->
+  <text x="16" y="72" fill="#555" font-size="11" font-style="italic"># Clean — everything committed</text>
+  <text x="16" y="92" fill="#cfae00" font-weight="bold">john</text>
+  <text x="55" y="92" fill="#aaaaaa">@</text>
+  <text x="66" y="92" fill="#cfae00" font-weight="bold">hostname</text>
+  <text x="140" y="92" fill="#cccccc">:</text>
+  <text x="148" y="92" fill="#5b9bd5" font-weight="bold">/docker/project</text>
+  <text x="300" y="92" fill="#3fb950" font-weight="bold"> (main)</text>
+  <text x="356" y="92" fill="#ffffff" font-weight="bold"> $</text>
+  <text x="374" y="92" fill="#cccccc"> git status</text>
+  <text x="16" y="110" fill="#555" font-size="12">nothing to commit, working tree clean</text>
+
+  <line x1="16" y1="122" x2="704" y2="122" stroke="#333" stroke-width="1"/>
+
+  <!-- Section 2: untracked -->
+  <text x="16" y="138" fill="#555" font-size="11" font-style="italic"># touch docker-compose.yml → untracked file</text>
+  <text x="16" y="158" fill="#cfae00" font-weight="bold">john</text>
+  <text x="55" y="158" fill="#aaaaaa">@</text>
+  <text x="66" y="158" fill="#cfae00" font-weight="bold">hostname</text>
+  <text x="140" y="158" fill="#cccccc">:</text>
+  <text x="148" y="158" fill="#5b9bd5" font-weight="bold">/docker/project</text>
+  <text x="300" y="158" fill="#3fb950" font-weight="bold"> (main)</text>
+  <text x="356" y="158" fill="#ffffff" font-weight="bold"> $</text>
+  <text x="374" y="158" fill="#cccccc"> touch docker-compose.yml</text>
+
+  <text x="16" y="178" fill="#cfae00" font-weight="bold">john</text>
+  <text x="55" y="178" fill="#aaaaaa">@</text>
+  <text x="66" y="178" fill="#cfae00" font-weight="bold">hostname</text>
+  <text x="140" y="178" fill="#cccccc">:</text>
+  <text x="148" y="178" fill="#5b9bd5" font-weight="bold">/docker/project</text>
+  <text x="300" y="178" fill="#d29922" font-weight="bold"> (main?)</text>
+  <text x="362" y="178" fill="#ffffff" font-weight="bold"> $</text>
+
+  <line x1="16" y1="192" x2="704" y2="192" stroke="#333" stroke-width="1"/>
+
+  <!-- Section 3: staged -->
+  <text x="16" y="208" fill="#555" font-size="11" font-style="italic"># git add → staged change</text>
+  <text x="16" y="228" fill="#cfae00" font-weight="bold">john</text>
+  <text x="55" y="228" fill="#aaaaaa">@</text>
+  <text x="66" y="228" fill="#cfae00" font-weight="bold">hostname</text>
+  <text x="140" y="228" fill="#cccccc">:</text>
+  <text x="148" y="228" fill="#5b9bd5" font-weight="bold">/docker/project</text>
+  <text x="300" y="228" fill="#d29922" font-weight="bold"> (main?)</text>
+  <text x="362" y="228" fill="#ffffff" font-weight="bold"> $</text>
+  <text x="380" y="228" fill="#cccccc"> git add docker-compose.yml</text>
+
+  <text x="16" y="248" fill="#cfae00" font-weight="bold">john</text>
+  <text x="55" y="248" fill="#aaaaaa">@</text>
+  <text x="66" y="248" fill="#cfae00" font-weight="bold">hostname</text>
+  <text x="140" y="248" fill="#cccccc">:</text>
+  <text x="148" y="248" fill="#5b9bd5" font-weight="bold">/docker/project</text>
+  <text x="300" y="248" fill="#f85149" font-weight="bold"> (main*)</text>
+  <text x="358" y="248" fill="#ffffff" font-weight="bold"> $</text>
+
+  <line x1="16" y1="262" x2="704" y2="262" stroke="#333" stroke-width="1"/>
+
+  <!-- Section 4: committed -->
+  <text x="16" y="278" fill="#555" font-size="11" font-style="italic"># git commit → back to clean</text>
+  <text x="16" y="298" fill="#cfae00" font-weight="bold">john</text>
+  <text x="55" y="298" fill="#aaaaaa">@</text>
+  <text x="66" y="298" fill="#cfae00" font-weight="bold">hostname</text>
+  <text x="140" y="298" fill="#cccccc">:</text>
+  <text x="148" y="298" fill="#5b9bd5" font-weight="bold">/docker/project</text>
+  <text x="300" y="298" fill="#f85149" font-weight="bold"> (main*)</text>
+  <text x="358" y="298" fill="#ffffff" font-weight="bold"> $</text>
+  <text x="376" y="298" fill="#cccccc"> git commit -m "add docker-compose"</text>
+
+  <text x="16" y="318" fill="#cfae00" font-weight="bold">john</text>
+  <text x="55" y="318" fill="#aaaaaa">@</text>
+  <text x="66" y="318" fill="#cfae00" font-weight="bold">hostname</text>
+  <text x="140" y="318" fill="#cccccc">:</text>
+  <text x="148" y="318" fill="#5b9bd5" font-weight="bold">/docker/project</text>
+  <text x="300" y="318" fill="#3fb950" font-weight="bold"> (main)</text>
+  <text x="356" y="318" fill="#ffffff" font-weight="bold"> $</text>
+
+  <line x1="16" y1="332" x2="704" y2="332" stroke="#333" stroke-width="1"/>
+
+  <!-- Section 5: detached HEAD -->
+  <text x="16" y="348" fill="#555" font-size="11" font-style="italic"># Detached HEAD → shows commit hash</text>
+  <text x="16" y="368" fill="#cfae00" font-weight="bold">john</text>
+  <text x="55" y="368" fill="#aaaaaa">@</text>
+  <text x="66" y="368" fill="#cfae00" font-weight="bold">hostname</text>
+  <text x="140" y="368" fill="#cccccc">:</text>
+  <text x="148" y="368" fill="#5b9bd5" font-weight="bold">/docker/project</text>
+  <text x="300" y="368" fill="#3fb950" font-weight="bold"> (main)</text>
+  <text x="356" y="368" fill="#ffffff" font-weight="bold"> $</text>
+  <text x="374" y="368" fill="#cccccc"> git checkout a1b2c3d</text>
+
+  <text x="16" y="388" fill="#cfae00" font-weight="bold">john</text>
+  <text x="55" y="388" fill="#aaaaaa">@</text>
+  <text x="66" y="388" fill="#cfae00" font-weight="bold">hostname</text>
+  <text x="140" y="388" fill="#cccccc">:</text>
+  <text x="148" y="388" fill="#5b9bd5" font-weight="bold">/docker/project</text>
+  <text x="300" y="388" fill="#d29922" font-weight="bold"> (a1b2c3d)</text>
+  <text x="372" y="388" fill="#ffffff" font-weight="bold"> $</text>
+
+  <line x1="16" y1="402" x2="704" y2="402" stroke="#333" stroke-width="1"/>
+
+  <!-- Section 6: outside repo -->
+  <text x="16" y="418" fill="#555" font-size="11" font-style="italic"># Outside of any git repo → no branch shown</text>
+  <text x="16" y="438" fill="#cfae00" font-weight="bold">john</text>
+  <text x="55" y="438" fill="#aaaaaa">@</text>
+  <text x="66" y="438" fill="#cfae00" font-weight="bold">hostname</text>
+  <text x="140" y="438" fill="#cccccc">:</text>
+  <text x="148" y="438" fill="#5b9bd5" font-weight="bold">/tmp</text>
+  <text x="184" y="438" fill="#ffffff" font-weight="bold"> $</text>
+
+  <!-- Legend -->
+  <rect x="16" y="462" width="688" height="44" rx="6" fill="#2a2a2a"/>
+  <circle cx="36" cy="484" r="5" fill="#3fb950"/>
+  <text x="48" y="488" fill="#888" font-family="sans-serif" font-size="11">(main) clean</text>
+  <circle cx="156" cy="484" r="5" fill="#d29922"/>
+  <text x="168" y="488" fill="#888" font-family="sans-serif" font-size="11">(main?) untracked</text>
+  <circle cx="306" cy="484" r="5" fill="#f85149"/>
+  <text x="318" y="488" fill="#888" font-family="sans-serif" font-size="11">(main*) modified/staged</text>
+  <circle cx="486" cy="484" r="5" fill="#d29922"/>
+  <text x="498" y="488" fill="#888" font-family="sans-serif" font-size="11">(a1b2c3d) detached HEAD</text>
+
+</svg>
