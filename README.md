@@ -27,14 +27,14 @@ Add the following code to your `~/.bashrc`:
 
 ```bash
 __git_info() {
-    local branch untracked modified color reset
+    local branch untracked modified color reset status
 
     branch=$(git symbolic-ref --short HEAD 2>/dev/null) || \
     branch=$(git rev-parse --short HEAD 2>/dev/null) || return
 
-    git diff --quiet 2>/dev/null            || modified="*"
-    git diff --cached --quiet 2>/dev/null   || modified="*"
-    [ -n "$(git ls-files --others --exclude-standard 2>/dev/null)" ] && untracked="?"
+    status=$(timeout 3 git status --porcelain --untracked-files=normal 2>/dev/null)
+    [ -n "$status" ] && echo "$status" | grep -qv '^??' && modified="*"
+    [ -n "$status" ] && echo "$status" | grep -q  '^??' && untracked="?"
 
     reset="\001\e[0m\002"
 
@@ -76,33 +76,18 @@ branch=$(git rev-parse --short HEAD 2>/dev/null) || return
 - If both fail, the function exits silently — meaning the prompt shows no git info at all when outside a repo
 - `2>/dev/null` suppresses any error output
 
-#### 2. Detecting Unstaged Changes
+#### 2. Detecting Changes and Untracked Files
 
 ```bash
-git diff --quiet 2>/dev/null || modified="*"
+status=$(timeout 3 git status --porcelain --untracked-files=normal 2>/dev/null)
+[ -n "$status" ] && echo "$status" | grep -qv '^??' && modified="*"
+[ -n "$status" ] && echo "$status" | grep -q  '^??' && untracked="?"
 ```
 
-- `git diff --quiet` checks for differences between the working directory and the index (staging area)
-- If there are changes, the exit code is non-zero, so `modified="*"` gets set
-
-#### 3. Detecting Staged Changes
-
-```bash
-git diff --cached --quiet 2>/dev/dev/null || modified="*"
-```
-
-- `git diff --cached` compares the staging area to the last commit
-- Catches files that have been staged with `git add` but not yet committed
-
-#### 4. Detecting Untracked Files
-
-```bash
-[ -n "$(git ls-files --others --exclude-standard 2>/dev/null)" ] && untracked="?"
-```
-
-- `git ls-files --others` lists files that git doesn't track yet
-- `--exclude-standard` respects `.gitignore` rules, so ignored files don't trigger the indicator
-- If the output is non-empty (`-n`), `untracked="?"` gets set
+- A single `git status --porcelain` call replaces the previous three separate `git diff` / `git ls-files` calls, reducing process overhead significantly
+- `--porcelain` gives machine-readable output: lines starting with `??` are untracked files, all other lines are staged or unstaged changes
+- `--untracked-files=normal` treats an entire untracked directory as a single entry instead of recursing into it and listing every file — critical for repos where `.gitignore` uses `!*/` (allow all directories)
+- `timeout 3` aborts the call after 3 seconds so the prompt never hangs indefinitely
 
 #### 5. Choosing the Color
 
@@ -124,6 +109,16 @@ Priority order:
 #### 6. Why `\001` and `\002` Instead of `\[` and `\]`
 
 Bash uses `\[` and `\]` in PS1 to mark non-printable sequences (like color codes), so the terminal can correctly calculate the cursor position. However, these escape sequences only work directly inside PS1 — not inside a function's output. Inside functions, the raw ASCII equivalents `\001` (start) and `\002` (end) must be used instead.
+
+## Performance: Repos with Many Untracked Files
+
+If the prompt feels slow in a repo that contains many files not tracked by git (e.g. a build output folder or a Docker-compose repo with a `.gitignore` that uses `!*/`), enable git's built-in untracked cache **once per repo**:
+
+```bash
+git config core.untrackedCache true
+```
+
+With this setting git records the `mtime` of every directory and only rescans directories that have changed since the last run. The first prompt after enabling it may still be slow while the cache is being built — all subsequent ones will be fast.
 
 ### The PS1 Variable
 

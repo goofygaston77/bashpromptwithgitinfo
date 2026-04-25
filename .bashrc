@@ -9,18 +9,19 @@ __git_info() {
     branch=$(git symbolic-ref --short HEAD 2>/dev/null) || \
     branch=$(git rev-parse --short HEAD 2>/dev/null) || return
 
-    # Unstaged changes: files that are already tracked by git, but have not
-    # been staged yet with "git add"
-    git diff --quiet 2>/dev/null            || modified="*"
+    # Single git call instead of 3 separate ones → less overhead.
+    # timeout 3: abort if git hangs (e.g. repos with many untracked files).
+    # --untracked-files=normal: treat untracked dirs as a single entry, don't recurse.
+    #   Combined with: git config core.untrackedCache true   (set once per slow repo)
+    #   → git only rescans directories whose mtime changed, making it fast.
+    local status
+    status=$(timeout 3 git status --porcelain --untracked-files=normal 2>/dev/null)
 
-    # Staged changes: files that have been staged with "git add",
-    # but not yet committed
-    git diff --cached --quiet 2>/dev/null   || modified="*"
+    # Staged or unstaged changes: any output line that is not an untracked marker
+    [ -n "$status" ] && echo "$status" | grep -qv '^??' && modified="*"
 
-    # Untracked files: new files that git doesn't know about yet
-    # --others        = show only untracked files
-    # --exclude-standard = respect .gitignore rules
-    [ -n "$(git ls-files --others --exclude-standard 2>/dev/null)" ] && untracked="?"
+    # Untracked files
+    [ -n "$status" ] && echo "$status" | grep -q '^??' && untracked="?"
 
     # Reset sequence: restores color back to normal after the branch name
     # \001 and \002 are required here instead of \[ and \], because we are inside a function
